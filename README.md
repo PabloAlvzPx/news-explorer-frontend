@@ -19,7 +19,7 @@ Un explorador de noticias interactivo donde los usuarios pueden buscar artículo
 
 ## 🔗 Enlace al proyecto
 
-[Visita el proyecto en vivo aquí](https://github.com/PabloAlvzPx/news-explorer-frontend.git)
+[Visita el proyecto en vivo aquí](https://pabloalvzpx.github.io/news-explorer-frontend/)
 
 ## 👨‍💻 Autor
 

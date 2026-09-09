@@ -109,7 +109,7 @@ function App() {
     if (storedSavedArticles) {
       setSavedArticles(JSON.parse(storedSavedArticles));
     }
-  }, []);
+  }, [setSavedArticles]);
 
   return (
     <div className="page">
@@ -117,7 +117,6 @@ function App() {
         onLoginClick={handleLoginClick}
         isLoggedIn={isLoggedIn}
         userName={userName}
-        onSearch={handleSearchSubmit}
         onLogout={handleLogout}
       />
 

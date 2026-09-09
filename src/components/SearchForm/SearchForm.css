@@ -18,6 +18,10 @@
   box-sizing: border-box;
 }
 
+.search-form__input:focus {
+  outline: 2px solid #2f71e5;
+}
+
 .search-form__input::placeholder {
   color: #d1d2d6;
 }

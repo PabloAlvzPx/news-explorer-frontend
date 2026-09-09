@@ -29,10 +29,6 @@
   opacity: 0.7;
 }
 
-.navigation__link--light {
-  color: #1a1b22;
-}
-
 .navigation__button {
   display: flex;
   align-items: center;
@@ -63,11 +59,11 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.navigation__link_dark {
+.navigation__link--dark {
   color: #1a1b22;
 }
 
-.navigation__button_dark {
+.navigation__button--dark {
   color: #1a1b22;
   border-color: #1a1b22;
 }
@@ -85,16 +81,16 @@
   z-index: 999 !important;
 }
 
-.navigation__hamburger_close {
+.navigation__hamburger--close {
   background-image: url("../../images/close-icon.svg");
 }
 
-.navigation__hamburger_dark {
+.navigation__hamburger--dark {
   background-image: url("../../images/menu-icon.svg") !important;
   filter: brightness(0) !important;
 }
 
-.navigation__hamburger_close.navigation__hamburger_dark {
+.navigation__hamburger--close.navigation__hamburger--dark {
   background-image: url("../../images/close-icon.svg") !important;
   filter: brightness(0) !important;
 }
@@ -118,7 +114,7 @@
     z-index: 100;
   }
 
-  .navigation_opened {
+  .navigation--opened {
     display: flex;
   }
 
@@ -159,11 +155,11 @@
     background-color: rgba(255, 255, 255, 0.2);
   }
 
-  .navigation__container_dark {
+  .navigation__container--dark {
     background-color: #ffffff;
   }
 
-  .navigation__container_dark::before {
+  .navigation__container--dark::before {
     background-color: #d1d2d6;
   }
 }

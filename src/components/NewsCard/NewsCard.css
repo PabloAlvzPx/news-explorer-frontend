@@ -24,26 +24,6 @@
   background-color: #d1d2d6;
 }
 
-.news-card__save-button {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 40px;
-  height: 40px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.news-card__save-button:hover {
-  background-color: #f5f6f7;
-}
-
 .news-card__info {
   padding: 24px;
   display: flex;
