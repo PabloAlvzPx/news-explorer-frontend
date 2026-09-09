@@ -1,6 +1,6 @@
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
-function Register({ isOpen, onClose, onSwitchModal }) {
+function Register({ isOpen, onClose, onSwitchModal, onRegister }) {
   return (
     <PopupWithForm
       name="register"
@@ -11,6 +11,7 @@ function Register({ isOpen, onClose, onSwitchModal }) {
       altLinkText="Iniciar sesión"
       onAltLinkClick={onSwitchModal}
       isValid={true}
+      onSubmit={onRegister}
     >
       <label className="popup__label">
         Correo electrónico

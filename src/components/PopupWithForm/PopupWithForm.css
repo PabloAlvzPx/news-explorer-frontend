@@ -13,7 +13,7 @@
   transition:
     visibility 0.3s,
     opacity 0.3s ease;
-  z-index: 100;
+  z-index: 300;
 }
 
 .popup_opened {
@@ -118,9 +118,32 @@
   color: #2f71e5;
   cursor: pointer;
   font-weight: 500;
-  transition: opacity 0.3s ease;
 }
 
-.popup__alt-link:hover {
-  opacity: 0.7;
+@media (max-width: 480px) {
+  .popup {
+    align-items: flex-end;
+  }
+
+  .popup__container {
+    width: 100%;
+    max-width: 100%;
+    height: calc(100vh - 56px);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 16px;
+    margin: 0;
+    justify-content: flex-start;
+  }
+
+  .popup__close-button {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 310;
+  }
+
+  .popup__close-button img {
+    width: 24px;
+    height: 24px;
+  }
 }

@@ -1,6 +1,22 @@
+import { useState } from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
-function Login({ isOpen, onClose, onSwitchModal }) {
+function Login({ isOpen, onClose, onSwitchModal, onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isPasswordValid = password.trim().length >= 6;
+
+  const isFormValid = isEmailValid && isPasswordValid;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isFormValid) {
+      onLogin();
+    }
+  };
+
   return (
     <PopupWithForm
       name="login"
@@ -10,7 +26,8 @@ function Login({ isOpen, onClose, onSwitchModal }) {
       onClose={onClose}
       altLinkText="Inscribirse"
       onAltLinkClick={onSwitchModal}
-      isValid={true}
+      onSubmit={handleSubmit}
+      isValid={isFormValid}
     >
       <label className="popup__label">
         Correo electrónico
@@ -20,6 +37,8 @@ function Login({ isOpen, onClose, onSwitchModal }) {
           className="popup__input"
           placeholder="Introduce tu correo electrónico"
           required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </label>
 
@@ -31,6 +50,8 @@ function Login({ isOpen, onClose, onSwitchModal }) {
           className="popup__input"
           placeholder="Introduce tu contraseña"
           required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </label>
     </PopupWithForm>

@@ -1,39 +1,84 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoutIcon from "../../images/logout-icon.svg";
 import logoutIconDark from "../../images/logout-icon-dark.svg";
 import "./Navigation.css";
 
-function Navigation({ isSavedNews, onLoginClick, isLoggedIn }) {
+function Navigation({
+  isSavedNews,
+  onLoginClick,
+  isLoggedIn,
+  userName,
+  onLogout,
+}) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   const linkClass = `navigation__link ${isSavedNews ? "navigation__link_dark" : ""}`;
   const buttonClass = `navigation__button ${isSavedNews ? "navigation__button_dark" : ""}`;
 
   return (
-    <nav className="navigation">
-      <Link to="/" className={linkClass}>
-        Inicio
-      </Link>
+    <>
+      <button
+        className={`navigation__hamburger ${isSavedNews ? "navigation__hamburger_dark" : ""} ${isMenuOpen ? "navigation__hamburger_close" : ""}`}
+        onClick={toggleMenu}
+        aria-label="Menú de navegación"
+      />
 
-      {isLoggedIn && (
-        <Link to="/saved-news" className={linkClass}>
-          Artículos guardados
-        </Link>
-      )}
+      <nav className={`navigation ${isMenuOpen ? "navigation_opened" : ""}`}>
+        {isMenuOpen && (
+          <div className="navigation__overlay" onClick={closeMenu}></div>
+        )}
 
-      {isLoggedIn ? (
-        <button className={`${buttonClass} navigation__button_logout`}>
-          Elise
-          <img
-            src={isSavedNews ? logoutIconDark : logoutIcon}
-            alt="Cerrar sesión"
-            style={{ marginLeft: "10px" }}
-          />
-        </button>
-      ) : (
-        <button className={buttonClass} onClick={onLoginClick}>
-          Iniciar sesión
-        </button>
-      )}
-    </nav>
+        <div
+          className={`navigation__container ${isSavedNews ? "navigation__container_dark" : ""}`}
+        >
+          <Link to="/" className={linkClass} onClick={closeMenu}>
+            Inicio
+          </Link>
+
+          {isLoggedIn && (
+            <Link to="/saved-news" className={linkClass} onClick={closeMenu}>
+              Artículos guardados
+            </Link>
+          )}
+
+          {isLoggedIn ? (
+            <button
+              className={`${buttonClass} navigation__button_logout`}
+              onClick={() => {
+                closeMenu();
+                onLogout();
+              }}
+            >
+              {userName}
+              <img
+                src={isSavedNews ? logoutIconDark : logoutIcon}
+                alt="Cerrar sesión"
+                style={{ marginLeft: "10px" }}
+              />
+            </button>
+          ) : (
+            <button
+              className={buttonClass}
+              onClick={() => {
+                closeMenu();
+                onLoginClick();
+              }}
+            >
+              Iniciar sesión
+            </button>
+          )}
+        </div>
+      </nav>
+    </>
   );
 }
 

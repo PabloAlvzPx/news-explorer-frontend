@@ -35,3 +35,9 @@
 .saved-news-header__keywords-span {
   font-weight: 700;
 }
+
+@media (max-width: 768px) {
+  .saved-news-header {
+    padding: 40px 40px 56px 40px;
+  }
+}

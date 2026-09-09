@@ -1,16 +1,26 @@
-# React + Vite
+# NewsExplorer 📰
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un explorador de noticias interactivo donde los usuarios pueden buscar artículos sobre cualquier tema en el mundo, crear una cuenta y guardar sus noticias favoritas en su perfil personal.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Búsqueda de noticias en tiempo real utilizando la API de NewsAPI.
+- Registro e inicio de sesión de usuarios.
+- Guardado y eliminación de artículos en una ruta protegida.
+- Diseño 100% responsivo (Mobile First) adaptable a cualquier dispositivo.
 
-## React Compiler
+## 🛠️ Tecnologías utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- HTML5 y CSS3 (Flexbox/Grid, BEM)
+- JavaScript (ES6+)
+- React.js (Hooks, React Router, Create React App)
+- Integración de API de terceros (Fetch)
+- Git y GitHub
 
-## Expanding the ESLint configuration
+## 🔗 Enlace al proyecto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+[Visita el proyecto en vivo aquí](https://github.com/PabloAlvzPx/news-explorer-frontend.git)
+
+## 👨‍💻 Autor
+
+- **Pablo Alvarez Pérez** - [Tu perfil de GitHub](https://github.com/PabloAlvzPx)

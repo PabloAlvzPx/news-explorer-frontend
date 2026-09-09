@@ -1,11 +1,14 @@
 .navigation {
   display: flex;
   align-items: center;
-  gap: 34px;
+  height: 100%;
+  margin: 0;
 }
 
-.navigation__list {
+.navigation__container {
   display: flex;
+  align-items: center;
+  height: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -67,4 +70,100 @@
 .navigation__button_dark {
   color: #1a1b22;
   border-color: #1a1b22;
+}
+
+.navigation__hamburger {
+  display: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../images/menu-icon.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 999 !important;
+}
+
+.navigation__hamburger_close {
+  background-image: url("../../images/close-icon.svg");
+}
+
+.navigation__hamburger_dark {
+  background-image: url("../../images/menu-icon.svg") !important;
+  filter: brightness(0) !important;
+}
+
+.navigation__hamburger_close.navigation__hamburger_dark {
+  background-image: url("../../images/close-icon.svg") !important;
+  filter: brightness(0) !important;
+}
+
+@media (max-width: 480px) {
+  .navigation__hamburger {
+    display: block;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+
+  .navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 100;
+  }
+
+  .navigation_opened {
+    display: flex;
+  }
+
+  .navigation__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1a1b22;
+    display: flex;
+    flex-direction: column;
+    padding: 72px 16px 24px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  .navigation__link {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 12px 0;
+  }
+
+  .navigation__button {
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
+    padding: 14px 0;
+  }
+
+  .navigation__container::before {
+    content: "";
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .navigation__container_dark {
+    background-color: #ffffff;
+  }
+
+  .navigation__container_dark::before {
+    background-color: #d1d2d6;
+  }
 }

@@ -2,11 +2,19 @@ import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import NewsCardList from "../NewsCardList/NewsCardList";
 import "./SavedNews.css";
 
-function SavedNews() {
+function SavedNews({ savedArticles, onDeleteArticle, isLoggedIn, userName }) {
   return (
     <main className="saved-news">
-      <SavedNewsHeader />
-      <NewsCardList />
+      <SavedNewsHeader savedArticles={savedArticles} userName={userName} />
+
+      {savedArticles.length > 0 && (
+        <NewsCardList
+          articles={savedArticles}
+          isLoggedIn={isLoggedIn}
+          savedArticles={savedArticles}
+          onDeleteArticle={onDeleteArticle}
+        />
+      )}
     </main>
   );
 }

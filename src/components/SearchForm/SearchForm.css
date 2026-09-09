@@ -42,3 +42,13 @@
 .search-form__button:hover {
   background-color: #347eff;
 }
+
+.search-form__error {
+  position: absolute;
+  bottom: -24px;
+  left: 20px;
+  color: #ff0000;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}

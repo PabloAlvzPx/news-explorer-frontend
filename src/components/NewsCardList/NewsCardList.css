@@ -17,6 +17,7 @@
 
 .news-card-list__cards {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   justify-content: center;
   margin-bottom: 64px;
@@ -39,4 +40,42 @@
 
 .news-card-list__button:hover {
   background-color: #e8e8e8;
+}
+
+@media (max-width: 768px) {
+  .news-card-list {
+    padding: 80px 40px;
+  }
+
+  .news-card-list__cards {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-card-list {
+    padding: 32px 16px;
+  }
+
+  .news-card-list__cards {
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .news-card-list__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .news-card-list__button {
+    width: 100%;
+  }
+
+  .header {
+    padding: 0 16px;
+  }
+
+  .saved-news-header {
+    padding: 24px 16px;
+  }
 }

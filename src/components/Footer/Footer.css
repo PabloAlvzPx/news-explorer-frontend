@@ -12,6 +12,7 @@
   font-size: 16px;
   color: #b8b8b8;
   margin: 0;
+  margin-right: auto;
 }
 
 .footer__content {
@@ -22,6 +23,7 @@
 
 .footer__links {
   display: flex;
+  align-items: center;
   gap: 24px;
 }
 
@@ -45,9 +47,43 @@
 
 .footer__social-icon {
   display: flex;
+  gap: 16px;
   transition: opacity 0.3s ease;
 }
 
 .footer__social-icon:hover {
   opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .footer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    padding: 20px 16px;
+    gap: 32px;
+  }
+
+  .footer__content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+
+  .footer__links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer__social {
+    margin-top: 0;
+  }
+
+  .footer__copyright {
+    margin-top: 0;
+    margin-right: 0;
+    font-size: 14px;
+  }
 }
