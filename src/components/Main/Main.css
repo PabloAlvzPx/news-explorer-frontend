@@ -1,0 +1,49 @@
+.main__hero {
+  background-image: url("../../images/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 576px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.main__title {
+  font-family: "Roboto Slab", Arial, serif;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 1.06;
+  color: #ffffff;
+  margin: 0 0 32px 0;
+  text-align: left;
+  max-width: 608px;
+}
+
+.main__subtitle {
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.33;
+  color: #ffffff;
+  margin: 0 0 64px 0;
+  text-align: left;
+  max-width: 460px;
+}
+
+@media (max-width: 768px) {
+  .main__title {
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title,
+  .main__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
