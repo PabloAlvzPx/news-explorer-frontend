@@ -21,24 +21,24 @@ function Navigation({
     setIsMenuOpen(false);
   };
 
-  const linkClass = `navigation__link ${isSavedNews ? "navigation__link--dark" : ""}`;
-  const buttonClass = `navigation__button ${isSavedNews ? "navigation__button--dark" : ""}`;
+  const linkClass = `navigation__link ${isSavedNews ? "navigation__link_dark" : ""}`;
+  const buttonClass = `navigation__button ${isSavedNews ? "navigation__button_dark" : ""}`;
 
   return (
     <>
       <button
-        className={`navigation__hamburger ${isSavedNews ? "navigation__hamburger--dark" : ""} ${isMenuOpen ? "navigation__hamburger--close" : ""}`}
+        className={`navigation__hamburger ${isSavedNews ? "navigation__hamburger_dark" : ""} ${isMenuOpen ? "navigation__hamburger_close" : ""}`}
         onClick={toggleMenu}
         aria-label="Menú de navegación"
       />
 
-      <nav className={`navigation ${isMenuOpen ? "navigation--opened" : ""}`}>
+      <nav className={`navigation ${isMenuOpen ? "navigation_opened" : ""}`}>
         {isMenuOpen && (
           <div className="navigation__overlay" onClick={closeMenu}></div>
         )}
 
         <div
-          className={`navigation__container ${isSavedNews ? "navigation__container--dark" : ""}`}
+          className={`navigation__container ${isSavedNews ? "navigation__container_dark" : ""}`}
         >
           <Link to="/" className={linkClass} onClick={closeMenu}>
             Inicio
@@ -52,7 +52,7 @@ function Navigation({
 
           {isLoggedIn ? (
             <button
-              className={`${buttonClass} navigation__button--logout`}
+              className={`${buttonClass} navigation__button_logout`}
               onClick={() => {
                 closeMenu();
                 onLogout();

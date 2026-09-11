@@ -6,9 +6,9 @@ function Header({ onLoginClick, isLoggedIn, userName, onLogout }) {
   const location = useLocation();
   const isSavedNews = location.pathname === "/saved-news";
 
-  const headerClass = isSavedNews ? "header header--light" : "header";
+  const headerClass = isSavedNews ? "header header_light" : "header";
   const logoClass = isSavedNews
-    ? "header__logo header__logo--light"
+    ? "header__logo header__logo_light"
     : "header__logo";
 
   return (

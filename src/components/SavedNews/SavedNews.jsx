@@ -1,6 +1,5 @@
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import NewsCardList from "../NewsCardList/NewsCardList";
-import "./SavedNews.css";
 
 function SavedNews({ savedArticles, onDeleteArticle, isLoggedIn, userName }) {
   return (

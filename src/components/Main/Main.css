@@ -41,7 +41,6 @@
 }
 
 @media (max-width: 480px) {
-  .hero__title,
   .main__title {
     font-size: 32px;
     line-height: 40px;
