@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { searchNews } from "../../utils/NewsApi";
 import Header from "../Header/Header";
@@ -25,7 +25,10 @@ function App() {
 
   const [currentKeyword, setCurrentKeyword] = useState("");
 
-  const [savedArticles, setSavedArticles] = useState([]);
+  const [savedArticles, setSavedArticles] = useState(() => {
+    const storedSavedArticles = localStorage.getItem("savedArticles");
+    return storedSavedArticles ? JSON.parse(storedSavedArticles) : [];
+  });
 
   const navigate = useNavigate();
 
@@ -103,13 +106,6 @@ function App() {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    const storedSavedArticles = localStorage.getItem("savedArticles");
-    if (storedSavedArticles) {
-      setSavedArticles(JSON.parse(storedSavedArticles));
-    }
-  }, [setSavedArticles]);
 
   return (
     <div className="page">
