@@ -21,7 +21,7 @@ function NewsCardList({
       <h2 className="news-card-list__title">Resultados de la búsqueda</h2>
 
       <div className="news-card-list__cards">
-        {articles.slice(0, visibleCount).map((article, index) => (
+        {articles.slice(0, visibleCount).map((article) => (
           <NewsCard
             key={index}
             article={article}

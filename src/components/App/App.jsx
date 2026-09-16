@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { searchNews } from "../../utils/NewsApi";
+import {
+  register,
+  login,
+  checkToken,
+  getSavedArticles,
+  deleteArticle,
+  saveArticle,
+} from "../../utils/MainApi";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import SavedNews from "../SavedNews/SavedNews";
@@ -8,6 +17,7 @@ import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import SuccessModal from "../SuccessModal/SuccessModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import "./App.css";
 
 function App() {
@@ -18,6 +28,8 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [currentUser, setCurrentUser] = useState({});
+
   const [news, setNews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
@@ -25,10 +37,33 @@ function App() {
 
   const [currentKeyword, setCurrentKeyword] = useState("");
 
-  const [savedArticles, setSavedArticles] = useState(() => {
-    const storedSavedArticles = localStorage.getItem("savedArticles");
-    return storedSavedArticles ? JSON.parse(storedSavedArticles) : [];
-  });
+  const [savedArticles, setSavedArticles] = useState([]);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      checkToken(jwt)
+        .then((userData) => {
+          if (userData) {
+            setCurrentUser(userData);
+            setUserName(userData.name);
+            setIsLoggedIn(true);
+
+            getSavedArticles(jwt)
+              .then((articles) => {
+                setSavedArticles(articles);
+              })
+              .catch((err) =>
+                console.error("Error al obtener artículos:", err),
+              );
+          }
+        })
+        .catch((err) => {
+          console.error("Error al validar el token:", err);
+          handleLogout();
+        });
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -48,11 +83,26 @@ function App() {
     setIsRegisterPopupOpen(true);
   };
 
-  const handleLogin = (e) => {
-    e?.preventDefault();
-    setIsLoggedIn(true);
-    setUserName("Pablo");
-    closeAllPopups();
+  const handleLogin = (email, password) => {
+    login(email, password)
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+
+          return checkToken(data.token);
+        }
+      })
+      .then((userData) => {
+        if (userData) {
+          setCurrentUser(userData);
+          setUserName(userData.name);
+          setIsLoggedIn(true);
+          closeAllPopups();
+        }
+      })
+      .catch((err) => {
+        console.error("Error al iniciar sesión:", err);
+      });
   };
 
   const handleLogout = () => {
@@ -61,25 +111,37 @@ function App() {
     navigate("/");
   };
 
-  const handleRegister = (e) => {
-    e?.preventDefault();
-    setIsRegisterPopupOpen(false);
-    setIsSuccessPopupOpen(true);
+  const handleRegister = (email, password, name) => {
+    register(email, password, name)
+      .then((res) => {
+        setIsRegisterPopupOpen(false);
+        setIsSuccessPopupOpen(true);
+      })
+      .catch((err) => {
+        console.error("Error al registrarse:", err);
+      });
   };
 
   const handleSaveArticle = (article, keyword) => {
-    const articleWithKeyword = { ...article, keyword };
-    const newSavedList = [...savedArticles, articleWithKeyword];
-    setSavedArticles(newSavedList);
-    localStorage.setItem("savedArticles", JSON.stringify(newSavedList));
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) return;
+
+    saveArticle(article, keyword, jwt)
+      .then((savedArticle) => {
+        setSavedArticles([...savedArticles, savedArticle]);
+      })
+      .catch((err) => console.error("Error al guardar el artículo:", err));
   };
 
-  const handleDeleteArticle = (articleUrl) => {
-    const newSavedList = savedArticles.filter(
-      (item) => item.url !== articleUrl,
-    );
-    setSavedArticles(newSavedList);
-    localStorage.setItem("savedArticles", JSON.stringify(newSavedList));
+  const handleDeleteArticle = (articleId) => {
+    const jwt = localStorage.getItem("jwt");
+    deleteArticle(articleId, jwt)
+      .then(() => {
+        setSavedArticles((state) =>
+          state.filter((item) => item._id !== articleId),
+        );
+      })
+      .catch((err) => console.error("Error al eliminar el artículo:", err));
   };
 
   const handleSearchSubmit = (keyword) => {
@@ -108,67 +170,75 @@ function App() {
   };
 
   return (
-    <div className="page">
-      <Header
-        onLoginClick={handleLoginClick}
-        isLoggedIn={isLoggedIn}
-        userName={userName}
-        onLogout={handleLogout}
-      />
-
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Main
-              news={news}
-              isLoading={isLoading}
-              hasSearched={hasSearched}
-              searchError={searchError}
-              onSearch={handleSearchSubmit}
-              isLoggedIn={isLoggedIn}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-              onDeleteArticle={handleDeleteArticle}
-              keyword={currentKeyword}
-            />
-          }
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <Header
+          onLoginClick={handleLoginClick}
+          isLoggedIn={isLoggedIn}
+          userName={userName}
+          onLogout={handleLogout}
         />
-        <Route
-          path="/saved-news"
-          element={
-            <SavedNews
-              savedArticles={savedArticles}
-              onDeleteArticle={handleDeleteArticle}
-              isLoggedIn={isLoggedIn}
-              userName={userName}
-            />
-          }
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main
+                news={news}
+                isLoading={isLoading}
+                hasSearched={hasSearched}
+                searchError={searchError}
+                onSearch={handleSearchSubmit}
+                isLoggedIn={isLoggedIn}
+                savedArticles={savedArticles}
+                onSaveArticle={handleSaveArticle}
+                onDeleteArticle={handleDeleteArticle}
+                keyword={currentKeyword}
+                onUnauthorizedClick={handleRegisterClick}
+              />
+            }
+          />
+          <Route
+            path="/saved-news"
+            element={
+              <ProtectedRoute
+                isLoggedIn={isLoggedIn}
+                handleLoginClick={handleLoginClick}
+              >
+                <SavedNews
+                  savedArticles={savedArticles}
+                  onDeleteArticle={handleDeleteArticle}
+                  isLoggedIn={isLoggedIn}
+                  userName={userName}
+                />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+
+        <Footer />
+
+        <Login
+          isOpen={isLoginPopupOpen}
+          onClose={closeAllPopups}
+          onSwitchModal={handleRegisterClick}
+          onLogin={handleLogin}
         />
-      </Routes>
 
-      <Footer />
+        <Register
+          isOpen={isRegisterPopupOpen}
+          onClose={closeAllPopups}
+          onSwitchModal={handleLoginClick}
+          onRegister={handleRegister}
+        />
 
-      <Login
-        isOpen={isLoginPopupOpen}
-        onClose={closeAllPopups}
-        onSwitchModal={handleRegisterClick}
-        onLogin={handleLogin}
-      />
-
-      <Register
-        isOpen={isRegisterPopupOpen}
-        onClose={closeAllPopups}
-        onSwitchModal={handleLoginClick}
-        onRegister={handleRegister}
-      />
-
-      <SuccessModal
-        isOpen={isSuccessPopupOpen}
-        onClose={closeAllPopups}
-        onSwitchModal={handleLoginClick}
-      />
-    </div>
+        <SuccessModal
+          isOpen={isSuccessPopupOpen}
+          onClose={closeAllPopups}
+          onSwitchModal={handleLoginClick}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

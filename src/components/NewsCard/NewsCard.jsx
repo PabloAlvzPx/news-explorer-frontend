@@ -31,10 +31,18 @@ function NewsCard({
   }
 
   const handleSaveClick = () => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      onUnauthorizedClick();
+      return;
+    }
 
     if (isSaved) {
-      onDeleteArticle(article.url);
+      const savedArticle = savedArticles.find(
+        (item) => item.url === article.url,
+      );
+      if (savedArticle) {
+        onDeleteArticle(savedArticle._id);
+      }
     } else {
       onSaveArticle(article, keyword);
     }
@@ -68,7 +76,7 @@ function NewsCard({
                 aria-label="Eliminar artículo"
                 onMouseEnter={() => setIsTrashHovered(true)}
                 onMouseLeave={() => setIsTrashHovered(false)}
-                onClick={() => onDeleteArticle(article.url)}
+                onClick={() => onDeleteArticle(article._id)}
               >
                 <img
                   src={isTrashHovered ? trashIconHover : trashIcon}
