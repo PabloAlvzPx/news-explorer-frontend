@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 

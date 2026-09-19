@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { searchNews } from "../../utils/NewsApi";
 import {
@@ -39,6 +39,15 @@ function App() {
 
   const [savedArticles, setSavedArticles] = useState([]);
 
+  const navigate = useNavigate();
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setUserName("");
+    navigate("/");
+  }, [navigate]);
+
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
@@ -63,9 +72,7 @@ function App() {
           handleLogout();
         });
     }
-  }, []);
-
-  const navigate = useNavigate();
+  }, [handleLogout]);
 
   const closeAllPopups = () => {
     setIsLoginPopupOpen(false);
@@ -88,7 +95,6 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-
           return checkToken(data.token);
         }
       })
@@ -105,15 +111,9 @@ function App() {
       });
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserName("");
-    navigate("/");
-  };
-
   const handleRegister = (email, password, name) => {
     register(email, password, name)
-      .then((res) => {
+      .then(() => {
         setIsRegisterPopupOpen(false);
         setIsSuccessPopupOpen(true);
       })

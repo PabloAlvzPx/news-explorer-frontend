@@ -9,6 +9,7 @@ function NewsCardList({
   savedArticles,
   onSaveArticle,
   onDeleteArticle,
+  onUnauthorizedClick,
 }) {
   const [visibleCount, setVisibleCount] = useState(3);
 
@@ -23,13 +24,14 @@ function NewsCardList({
       <div className="news-card-list__cards">
         {articles.slice(0, visibleCount).map((article) => (
           <NewsCard
-            key={index}
+            key={article.url}
             article={article}
             keyword={keyword}
             isLoggedIn={isLoggedIn}
             savedArticles={savedArticles}
             onSaveArticle={onSaveArticle}
             onDeleteArticle={onDeleteArticle}
+            onUnauthorizedClick={onUnauthorizedClick}
           />
         ))}
       </div>

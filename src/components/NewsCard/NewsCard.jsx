@@ -14,6 +14,7 @@ function NewsCard({
   savedArticles = [],
   onSaveArticle,
   onDeleteArticle,
+  onUnauthorizedClick,
 }) {
   const location = useLocation();
   const isSavedNews = location.pathname === "/saved-news";

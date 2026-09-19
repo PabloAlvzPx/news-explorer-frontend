@@ -16,6 +16,7 @@ function Main({
   savedArticles,
   onSaveArticle,
   onDeleteArticle,
+  onUnauthorizedClick,
 }) {
   return (
     <main className="main">
@@ -63,6 +64,7 @@ function Main({
           savedArticles={savedArticles}
           onSaveArticle={onSaveArticle}
           onDeleteArticle={onDeleteArticle}
+          onUnauthorizedClick={onUnauthorizedClick}
         />
       )}
 
