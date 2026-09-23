@@ -27,7 +27,7 @@ function App() {
   const [userName, setUserName] = useState("");
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-const [isCheckingToken, setIsCheckingToken] = useState(true);
+  const [isCheckingToken] = useState(true);
 
   const [currentUser, setCurrentUser] = useState({});
 
@@ -50,36 +50,30 @@ const [isCheckingToken, setIsCheckingToken] = useState(true);
   }, [navigate]);
 
 useEffect(() => {
-  const jwt = localStorage.getItem("jwt");
-  if (jwt) {
-    checkToken(jwt)
-      .then((userData) => {
-        if (userData) {
-          setCurrentUser(userData);
-          setUserName(userData.name);
-          setIsLoggedIn(true);
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      checkToken(jwt)
+        .then((userData) => {
+          if (userData) {
+            setCurrentUser(userData);
+            setUserName(userData.name);
+            setIsLoggedIn(true);
 
-          getSavedArticles(jwt)
-            .then((articles) => {
-              setSavedArticles(articles);
-            })
-            .catch((err) =>
-              console.error("Error al obtener artículos:", err),
-            );
-        }
-      })
-      .catch((err) => {
-        console.error("Error al validar el token:", err);
-        handleLogout();
-      })
-      .finally(() => {
-        setIsCheckingToken(false);
-      });
-  } else {
-    setIsCheckingToken(false);
-  }
-}, [handleLogout]);
-
+            getSavedArticles(jwt)
+              .then((articles) => {
+                setSavedArticles(articles);
+              })
+              .catch((err) =>
+                console.error("Error al obtener artículos:", err),
+              );
+          }
+        })
+        .catch((err) => {
+          console.error("Error al validar el token:", err);         
+          localStorage.removeItem("jwt"); 
+        });
+    }
+  }, []);
   const closeAllPopups = () => {
     setIsLoginPopupOpen(false);
     setIsRegisterPopupOpen(false);
