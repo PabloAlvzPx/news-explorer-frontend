@@ -27,7 +27,9 @@ function App() {
   const [userName, setUserName] = useState("");
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isCheckingToken] = useState(true);
+  const [isCheckingToken, setIsCheckingToken] = useState(
+    localStorage.getItem("jwt") ? true : false
+  );
 
   const [currentUser, setCurrentUser] = useState({});
 
@@ -51,6 +53,7 @@ function App() {
 
 useEffect(() => {
     const jwt = localStorage.getItem("jwt");
+    
     if (jwt) {
       checkToken(jwt)
         .then((userData) => {
@@ -63,17 +66,19 @@ useEffect(() => {
               .then((articles) => {
                 setSavedArticles(articles);
               })
-              .catch((err) =>
-                console.error("Error al obtener artículos:", err),
-              );
+              .catch((err) => console.error("Error al obtener artículos:", err));
           }
         })
         .catch((err) => {
-          console.error("Error al validar el token:", err);         
-          localStorage.removeItem("jwt"); 
+          console.error("Error al validar el token:", err);
+          localStorage.removeItem("jwt");
+        })
+        .finally(() => {
+          setIsCheckingToken(false);
         });
     }
   }, []);
+
   const closeAllPopups = () => {
     setIsLoginPopupOpen(false);
     setIsRegisterPopupOpen(false);
