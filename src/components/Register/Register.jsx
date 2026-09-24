@@ -1,17 +1,31 @@
+import { useEffect } from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation"; // Asegúrate de que la ruta sea correcta
 
 function Register({ isOpen, onClose, onSwitchModal, onRegister }) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
+
+  useEffect(() => {
+    resetForm();
+  }, [isOpen, resetForm]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onRegister(values.email, values.password, values.name);
+  };
+
   return (
     <PopupWithForm
       name="register"
-      title="Inscribirse"
-      buttonText="Inscribirse"
+      title="Regístrate"
+      buttonText="Regístrate"
       isOpen={isOpen}
       onClose={onClose}
-      altLinkText="Iniciar sesión"
+      altLinkText="Inicia sesión"
       onAltLinkClick={onSwitchModal}
-      isValid={true}
-      onSubmit={onRegister}
+      isValid={isValid}
+      onSubmit={handleSubmit}
     >
       <label className="popup__label">
         Correo electrónico
@@ -20,8 +34,11 @@ function Register({ isOpen, onClose, onSwitchModal, onRegister }) {
           name="email"
           className="popup__input"
           placeholder="Introduce tu correo electrónico"
+          value={values.email || ""}
+          onChange={handleChange}
           required
         />
+        <span className="popup__error">{errors.email}</span>
       </label>
 
       <label className="popup__label">
@@ -31,21 +48,27 @@ function Register({ isOpen, onClose, onSwitchModal, onRegister }) {
           name="password"
           className="popup__input"
           placeholder="Introduce tu contraseña"
+          value={values.password || ""}
+          onChange={handleChange}
           required
         />
+        <span className="popup__error">{errors.password}</span>
       </label>
 
       <label className="popup__label">
         Nombre de usuario
         <input
           type="text"
-          name="username"
+          name="name"
           className="popup__input"
           placeholder="Introduce tu nombre de usuario"
+          value={values.name || ""}
+          onChange={handleChange}
           required
           minLength="2"
           maxLength="30"
         />
+        <span className="popup__error">{errors.name}</span>
       </label>
     </PopupWithForm>
   );

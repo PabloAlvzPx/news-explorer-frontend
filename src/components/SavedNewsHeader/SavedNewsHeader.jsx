@@ -1,18 +1,25 @@
 import "./SavedNewsHeader.css";
 
 function SavedNewsHeader({ savedArticles = [], userName = "Usuario" }) {
-  const keywords = savedArticles.map(
-    (article) => article.keyword || "Naturaleza",
+  const keywordCounts = {};
+  savedArticles.forEach((article) => {
+    const kw = article.keyword || "Naturaleza";
+    keywordCounts[kw] = (keywordCounts[kw] || 0) + 1;
+  });
+
+  const sortedKeywords = Object.keys(keywordCounts).sort(
+    (a, b) => keywordCounts[b] - keywordCounts[a],
   );
-  const uniqueKeywords = [...new Set(keywords)];
 
   let keywordString = "";
-  if (uniqueKeywords.length === 1) {
-    keywordString = uniqueKeywords[0];
-  } else if (uniqueKeywords.length === 2) {
-    keywordString = `${uniqueKeywords[0]} y ${uniqueKeywords[1]}`;
-  } else if (uniqueKeywords.length > 2) {
-    keywordString = `${uniqueKeywords[0]}, ${uniqueKeywords[1]}, y ${uniqueKeywords.length - 2} más`;
+  if (sortedKeywords.length === 1) {
+    keywordString = sortedKeywords[0];
+  } else if (sortedKeywords.length === 2) {
+    keywordString = `${sortedKeywords[0]} y ${sortedKeywords[1]}`;
+  } else if (sortedKeywords.length === 3) {
+    keywordString = `${sortedKeywords[0]}, ${sortedKeywords[1]} y ${sortedKeywords[2]}`;
+  } else if (sortedKeywords.length > 3) {
+    keywordString = `${sortedKeywords[0]}, ${sortedKeywords[1]} y ${sortedKeywords.length - 2} más`;
   }
 
   return (
@@ -22,7 +29,7 @@ function SavedNewsHeader({ savedArticles = [], userName = "Usuario" }) {
         {userName}, tienes {savedArticles.length} artículos guardados
       </h2>
 
-      {uniqueKeywords.length > 0 && (
+      {sortedKeywords.length > 0 && (
         <p className="saved-news-header__keywords">
           Por palabras clave:{" "}
           <span className="saved-news-header__keywords-span">
