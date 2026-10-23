@@ -1,26 +1,38 @@
 # NewsExplorer 📰
 
-Un explorador de noticias interactivo donde los usuarios pueden buscar artículos sobre cualquier tema en el mundo, crear una cuenta y guardar sus noticias favoritas en su perfil personal.
+News search app where users can look up articles on any topic, create an account and save their favorite stories to a personal profile.
 
-## 🚀 Características
+**🔗 Live demo:** https://pablo-news.chickenkiller.com
+**⚙️ Backend repo:** https://github.com/PabloAlvzPx/news-explorer-backend
 
-- Búsqueda de noticias en tiempo real utilizando la API de NewsAPI.
-- Registro e inicio de sesión de usuarios.
-- Guardado y eliminación de artículos en una ruta protegida.
-- Diseño 100% responsivo (Mobile First) adaptable a cualquier dispositivo.
+<!-- Add a screenshot: drag an image into this file while editing on GitHub and it will create the link for you -->
+![NewsExplorer screenshot](./screenshot.png)
 
-## 🛠️ Tecnologías utilizadas
+## Features
 
-- HTML5 y CSS3 (Flexbox/Grid, BEM)
-- JavaScript (ES6+)
-- React.js (Hooks, React Router, Create React App)
-- Integración de API de terceros (Fetch)
-- Git y GitHub
+- Real-time news search powered by NewsAPI
+- User sign up and sign in with JWT authentication
+- Save and delete articles on a protected "Saved articles" page
+- Fully responsive, mobile-first layout
 
-## 🔗 Enlace al proyecto
+## Tech stack
 
-[Visita el proyecto en vivo aquí](https://pablo-news.chickenkiller.com)
+- **Frontend:** React (Hooks, Context), React Router, Vite
+- **Styling:** CSS3 (Flexbox, Grid) with BEM methodology
+- **API:** Fetch requests to NewsAPI and to my own REST API (Node.js, Express, MongoDB)
+- **Tools:** Git, GitHub, ESLint
 
-## 👨‍💻 Autor
+## Run it locally
 
-- **Pablo Alvarez Pérez** - [Tu perfil de GitHub](https://github.com/PabloAlvzPx)
+```bash
+git clone https://github.com/PabloAlvzPx/news-explorer-frontend.git
+cd news-explorer-frontend
+npm install
+npm run dev
+```
+
+## Author
+
+**Pablo Alvarez Pérez** — [GitHub](https://github.com/PabloAlvzPx) · [LinkedIn](https://www.linkedin.com/in/pablo-alvz)
+
+Final project of the TripleTen Full-Stack Web Development bootcamp.
