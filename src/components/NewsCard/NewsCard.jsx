@@ -14,6 +14,7 @@ function NewsCard({
   savedArticles = [],
   onSaveArticle,
   onDeleteArticle,
+  onUnauthorizedClick,
 }) {
   const location = useLocation();
   const isSavedNews = location.pathname === "/saved-news";
@@ -21,7 +22,9 @@ function NewsCard({
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
   const [isTrashHovered, setIsTrashHovered] = useState(false);
 
-  const isSaved = savedArticles.some((item) => item.url === article.url);
+  const isSaved = savedArticles.some(
+    (item) => item.link === (article.url || article.link)
+  );
 
   let currentBookmarkIcon = bookmarkIcon;
   if (isSaved) {
@@ -31,10 +34,18 @@ function NewsCard({
   }
 
   const handleSaveClick = () => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      onUnauthorizedClick();
+      return;
+    }
 
     if (isSaved) {
-      onDeleteArticle(article.url);
+      const savedArticle = savedArticles.find(
+        (item) => item.link === (article.url || article.link)
+      );
+      if (savedArticle) {
+        onDeleteArticle(savedArticle._id);
+      }
     } else {
       onSaveArticle(article, keyword);
     }
@@ -52,7 +63,7 @@ function NewsCard({
       <div className="news-card__image-container">
         <div
           className="news-card__image"
-          style={{ backgroundImage: `url(${article.urlToImage})` }}
+          style={{ backgroundImage: `url(${article.image || article.urlToImage})` }}
         ></div>
 
         {isSavedNews ? (
@@ -68,7 +79,7 @@ function NewsCard({
                 aria-label="Eliminar artículo"
                 onMouseEnter={() => setIsTrashHovered(true)}
                 onMouseLeave={() => setIsTrashHovered(false)}
-                onClick={() => onDeleteArticle(article.url)}
+                onClick={() => onDeleteArticle(article._id)}
               >
                 <img
                   src={isTrashHovered ? trashIconHover : trashIcon}
@@ -100,10 +111,10 @@ function NewsCard({
       </div>
 
       <div className="news-card__info">
-        <p className="news-card__date">{formatDate(article.publishedAt)}</p>
+        <p className="news-card__date">{formatDate(article.date || article.publishedAt)}</p>
         <h3 className="news-card__title">
           <a
-            href={article.url}
+            href={article.link || article.url}
             target="_blank"
             rel="noopener noreferrer"
             style={{ color: "inherit", textDecoration: "none" }}
@@ -111,8 +122,8 @@ function NewsCard({
             {article.title}
           </a>
         </h3>
-        <p className="news-card__text">{article.description}</p>
-        <p className="news-card__source">{article.source?.name || "FUENTE"}</p>
+        <p className="news-card__text">{article.text || article.description}</p>
+        <p className="news-card__source">{article.source?.name || article.source || "FUENTE"}</p>
       </div>
     </article>
   );
